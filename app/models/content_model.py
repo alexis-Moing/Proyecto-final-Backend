@@ -1,5 +1,5 @@
 from app.models import BaseModel
-from sqlalchemy import Column, Integer, String, Text, Boolean, LargeBinary
+from sqlalchemy import Column, Integer, String, Text, Boolean, LargeBinary, VARCHAR
 
 class ContentModel(BaseModel):
     __tablename__ = 'Content'
@@ -9,6 +9,6 @@ class ContentModel(BaseModel):
     title = Column(String(255),unique=True, nullable=False)
     description = Column(Text)
     genre = Column(String(100))
-    picture = Column(LargeBinary)
+    picture = Column(VARCHAR(255))
     status = Column(Boolean, default=True)
     

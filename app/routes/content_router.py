@@ -24,7 +24,7 @@ class Contenido(Resource):
         return controller.save(request.json)
         
     
-    @jwt_required()
+    # @jwt_required()
     @content_ns.expect(schema_request.all())
     def get(self):
         '''Listar todo el contenido'''
