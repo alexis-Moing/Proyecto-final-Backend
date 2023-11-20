@@ -131,3 +131,15 @@ class UserController:
             }, HTTPStatus.INTERNAL_SERVER_ERROR 
         finally:
             self.db.session.close()
+            
+    
+    def profile_me(self,identity):
+        try:
+            record = self.model.where(id=identity).first()
+            response = self.schema(many=False)
+            return response.dump(record), HTTPStatus.OK
+        except Exception as e:
+            return {
+                'message' : 'a ocurrido un error',
+                'error' : str(e)
+            }, HTTPStatus.INTERNAL_SERVER_ERROR

@@ -4,7 +4,7 @@ from flask import request
 from http import HTTPStatus
 from app.controllers.users_controller import UserController
 from app.schemas.users_schema import UserRequestSchema
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import jwt_required, get_jwt_identity
 
 user_ns = api.namespace(
     name='users',
@@ -57,4 +57,14 @@ class UserById(Resource):
     def delete(self, id):
         '''Inhabilitar un usuario por su id'''
         controller = UserController()
-        return controller.remove(id)    
+        return controller.remove(id)
+    
+@user_ns.route("/profile/me")
+@user_ns.doc(security='Bearer')
+class UserProfile(Resource):
+    @jwt_required()
+    def get(self):
+        '''Obtener los datos de un usuario conectado'''
+        indentity = get_jwt_identity()
+        controller = UserController()
+        return controller.profile_me(indentity)
